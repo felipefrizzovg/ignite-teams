@@ -1,15 +1,9 @@
-import { Text, View } from "react-native";
+import Groups  from "@/src/components/Groups";
 
-export default function Groups() {
+export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Groups</Text>
-    </View>
+    <>
+      <Groups />
+    </>
   );
 }
