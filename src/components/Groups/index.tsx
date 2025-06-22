@@ -1,6 +1,6 @@
 import { Container } from "./Groups.styles";
 
-export default function Groups() {
+export function Groups() {
   return (
     <Container>
       
