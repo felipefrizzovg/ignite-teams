@@ -5,6 +5,7 @@ import theme from "@/src/theme";
 
 import { Groups }  from "@/src/components/Groups";
 import { Loading } from "../components/Loading";
+import { StatusBar } from "react-native";
 
 export default function Index() {
 
@@ -12,6 +13,11 @@ export default function Index() {
 
   return (
     <ThemeProvider theme={theme}>
+      <StatusBar 
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent
+      />
       {fontsLoaded ? <Groups /> : <Loading />}
     </ThemeProvider>
   );
