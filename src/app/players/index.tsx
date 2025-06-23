@@ -1,8 +1,9 @@
 import { Header } from "@/src/components/Header";
 import { Highlight } from "@/src/components/Highlight";
 import { ButtonIcon } from "@/src/components/ButtonIcon";
+import { Input } from "@/src/components/Input";
 
-import { Container } from "./Players.styles";
+import { Container, Form } from "./Players.styles";
 
 export function Players() {
   return (
@@ -14,7 +15,17 @@ export function Players() {
         subtitle="adicione a galera e separe os times"
       />
 
-      <ButtonIcon />
+      <Form>
+        <Input 
+        placeholder="Nome da pessoa"
+        autoCorrect={false}
+        />
+        <ButtonIcon 
+          icon="add"
+        />
+      </Form>
+
+
     </Container>
   );
 }
