@@ -1,3 +1,4 @@
+import { GroupCard } from "../GroupCard";
 import { Header } from "../Header";
 import { Highlight } from "../Highlight";
 
@@ -12,6 +13,9 @@ export function Groups() {
         title="Turmas"
         subtitle="Jogue com a sua turma"
       />
+
+
+      <GroupCard title="Galera do Ignite"  />
     </Container>
   );
 }
