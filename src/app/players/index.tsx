@@ -5,13 +5,14 @@ import { Header } from "@/src/components/Header";
 import { Highlight } from "@/src/components/Highlight";
 import { ButtonIcon } from "@/src/components/ButtonIcon";
 import { Input } from "@/src/components/Input";
+import { PlayerCard } from "@/src/components/PlayerCard";
+import { Filter } from "@/src/components/Filter";
 
 import { Container, Form, HeaderList, NumberOfPlayers } from "./Players.styles";
-import { Filter } from "@/src/components/Filter";
 
 export function Players() {
   const [team, setTeam] = useState('Time A');
-  const [players, setPlayers] = useState<string[]>([]);
+  const [players, setPlayers] = useState<string[]>(["Rodrigo", "Ana", "João", "Maria"]);
 
   return (
     <Container>
@@ -49,6 +50,25 @@ export function Players() {
           {players.length}
         </NumberOfPlayers>
       </HeaderList>
+
+      <FlatList 
+        data={players}
+        keyExtractor={item => item}
+        renderItem={({ item }) => (
+          <PlayerCard 
+            name={item}
+            onRemove={() => {}}
+          />
+        )}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 100 }}
+        ListEmptyComponent={() => (
+          <Highlight 
+            title="Nenhum jogador cadastrado"
+            subtitle="Adicione jogadores a sua turma"
+          />
+        )}
+      />
 
     </Container>
   );
