@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { FlatList } from "react-native";
+
 import { GroupCard } from "../GroupCard";
 import { Header } from "../Header";
 import { Highlight } from "../Highlight";
@@ -5,6 +8,8 @@ import { Highlight } from "../Highlight";
 import { Container } from "./Groups.styles";
 
 export function Groups() {
+  const [groups, setGroups] = useState<string[]>(['Galera do Ignite']);
+
   return (
     <Container>
       <Header />
@@ -14,8 +19,16 @@ export function Groups() {
         subtitle="Jogue com a sua turma"
       />
 
-
-      <GroupCard title="Galera do Ignite"  />
+      <FlatList 
+        data={groups}
+        keyExtractor={item => item}
+        renderItem={({ item }) => (
+          <GroupCard 
+            title={item}  
+            />
+        )}
+      />
+      
     </Container>
   );
 }
