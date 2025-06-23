@@ -9,10 +9,12 @@ import { PlayerCard } from "@/src/components/PlayerCard";
 import { Filter } from "@/src/components/Filter";
 
 import { Container, Form, HeaderList, NumberOfPlayers } from "./Players.styles";
+import { ListEmpty } from "@/src/components/ListEmpty";
+import { Button } from "@/src/components/Button";
 
 export function Players() {
   const [team, setTeam] = useState('Time A');
-  const [players, setPlayers] = useState<string[]>(["Rodrigo", "Ana", "João", "Maria"]);
+  const [players, setPlayers] = useState<string[]>([]);
 
   return (
     <Container>
@@ -60,14 +62,21 @@ export function Players() {
             onRemove={() => {}}
           />
         )}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 100 }}
+        contentContainerStyle={[
+          { paddingBottom: 100 },
+          players.length === 0 && { flex: 1 }
+        ]}
         ListEmptyComponent={() => (
-          <Highlight 
-            title="Nenhum jogador cadastrado"
-            subtitle="Adicione jogadores a sua turma"
+          <ListEmpty 
+          message="Não há pessoas nesse time"
           />
         )}
+        showsVerticalScrollIndicator={false}
+      />
+
+      <Button 
+        title="Remover Turma"
+        type="SECONDARY"
       />
 
     </Container>
