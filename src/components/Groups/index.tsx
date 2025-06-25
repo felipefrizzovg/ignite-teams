@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { FlatList } from "react-native";
 
-import { GroupCard } from "../GroupCard";
-import { Header } from "../Header";
-import { Highlight } from "../Highlight";
-import { ListEmpty } from "../ListEmpty";
+import GroupCard from "../GroupCard";
+import Header from "../Header";
+import Highlight from "../Highlight";
+import ListEmpty from "../ListEmpty";
 
 import { Container } from "./Groups.styles";
-import { Button } from "../Button";
+import Button from "../Button";
 
-export function Groups() {
+import { Link } from "expo-router";
+
+export default function Groups() {
   const [groups, setGroups] = useState<string[]>([]);
 
   return (
@@ -35,9 +37,11 @@ export function Groups() {
         )}
       />
 
-      <Button 
-        title="Criar nova turma"
-      />
+      <Link href="/newGroup" asChild>
+        <Button 
+          title="Criar nova turma"
+        />
+      </Link>
       
     </Container>
   );

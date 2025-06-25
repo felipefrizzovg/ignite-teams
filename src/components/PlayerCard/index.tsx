@@ -1,12 +1,12 @@
 import { Container, Icon, Name } from "./PlayerCard.styles";
-import { ButtonIcon } from "../ButtonIcon";
+import ButtonIcon from "../ButtonIcon";
 
 type Props = {
   name: string;
   onRemove: () => void;
 }
 
-export function PlayerCard({ name, onRemove }: Props) {
+export default function PlayerCard({ name, onRemove }: Props) {
   return (
     <Container>
       <Icon 

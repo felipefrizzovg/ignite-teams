@@ -2,7 +2,7 @@ import { TextInputProps } from "react-native";
 import { Container } from "./Input.styles";
 import { useTheme } from "styled-components/native";
 
-export function Input({...rest}: TextInputProps) {
+export default function Input({...rest}: TextInputProps) {
   const { COLORS } = useTheme()
 
   return (

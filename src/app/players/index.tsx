@@ -1,34 +1,37 @@
-import { FlatList } from "react-native";
+import { FlatList, Text } from "react-native";
 import { useState } from "react";
 
-import { Header } from "@/src/components/Header";
-import { Highlight } from "@/src/components/Highlight";
-import { ButtonIcon } from "@/src/components/ButtonIcon";
-import { Input } from "@/src/components/Input";
-import { PlayerCard } from "@/src/components/PlayerCard";
-import { Filter } from "@/src/components/Filter";
+import Header from "@/src/components/Header";
+import Highlight from "@/src/components/Highlight";
+import ButtonIcon from "@/src/components/ButtonIcon";
+import Input from "@/src/components/Input";
+import PlayerCard from "@/src/components/PlayerCard";
+import Filter from "@/src/components/Filter";
 
 import { Container, Form, HeaderList, NumberOfPlayers } from "./Players.styles";
-import { ListEmpty } from "@/src/components/ListEmpty";
-import { Button } from "@/src/components/Button";
+import ListEmpty from "@/src/components/ListEmpty";
+import Button from "@/src/components/Button";
+import { useLocalSearchParams } from "expo-router";
 
-export function Players() {
+export default function Players() {
   const [team, setTeam] = useState('Time A');
   const [players, setPlayers] = useState<string[]>([]);
+  const params = useLocalSearchParams()
+  const group = params.group as string;
 
   return (
     <Container>
       <Header showBackButton />
 
       <Highlight 
-        title="Nome da turma"
+        title={group}
         subtitle="adicione a galera e separe os times"
       />
 
       <Form>
         <Input 
-        placeholder="Nome da pessoa"
-        autoCorrect={false}
+          placeholder="Nome da pessoa"
+          autoCorrect={false}
         />
         <ButtonIcon 
           icon="add"
@@ -37,7 +40,7 @@ export function Players() {
 
       <HeaderList>
         <FlatList 
-          data={['Time A', 'Time B', 'Time C']}
+          data={['time a', 'time b', 'time c']}
           keyExtractor={item => item}
           renderItem={({ item }) => (
             <Filter 
