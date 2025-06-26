@@ -1,5 +1,5 @@
 import { Alert, FlatList } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
 
 import { AppError } from "@/src/utils/AppError";
@@ -38,6 +38,7 @@ export default function Players() {
 
     try {
       await playerAddByGroup(newPlayer, group);
+      fetchPlayersByTeam();
     } catch (error) {
       if (error instanceof AppError) {
         Alert.alert('Nova pessoa', error.message);
@@ -57,6 +58,10 @@ export default function Players() {
       Alert.alert('Pessoas', 'Não foi possível carregar as pessoas deste time.');
     }
   }
+
+  useEffect(() => {
+    fetchPlayersByTeam();
+  }, [team]);
 
   return (
     <Container>
@@ -99,10 +104,10 @@ export default function Players() {
 
       <FlatList 
         data={players}
-        keyExtractor={item => item}
+        keyExtractor={item => item.name}
         renderItem={({ item }) => (
           <PlayerCard 
-            name={item}
+            name={item.name}
             onRemove={() => {}}
           />
         )}
