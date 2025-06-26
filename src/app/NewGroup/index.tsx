@@ -7,6 +7,8 @@ import Button from "@/src/components/Button";
 import Input from "@/src/components/Input";
 import { useRouter } from "expo-router";
 import groupCreate from "@/src/storage/group/groupCreate";
+import { AppError } from "@/src/utils/AppError";
+import { Alert } from "react-native";
 
 export default function NewGroup() {
   const [group, setGroup] = useState("");
@@ -14,9 +16,9 @@ export default function NewGroup() {
 
   async function handleNewGroup() {
     try {
-      // if (group.trim().length === 0) {
-      //   return alert('Informe o nome da turma');
-      // }
+      if (group.trim().length === 0) {
+        return Alert.alert('Nova turma', 'Informe o nome da turma');
+      }
 
       await groupCreate(group);
 
@@ -25,7 +27,12 @@ export default function NewGroup() {
         params: { group },
       });
     } catch (error) {
-      console.log(error);
+      if (error instanceof AppError) {
+        Alert.alert('Nova turma', error.message);
+      } else {
+        Alert.alert('Nova turma', 'Não foi possível criar uma nova turma.');
+        console.log(error);
+      }
     }
   }
 
