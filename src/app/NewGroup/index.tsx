@@ -6,20 +6,27 @@ import Highlight from "@/src/components/Highlight";
 import Button from "@/src/components/Button";
 import Input from "@/src/components/Input";
 import { useRouter } from "expo-router";
+import groupCreate from "@/src/storage/group/groupCreate";
 
 export default function NewGroup() {
-  const [group, setGroup] = useState('');
+  const [group, setGroup] = useState("");
   const router = useRouter();
 
-  function handleNewGroup() {
-    if (group.trim().length === 0) {
-      return alert('Informe o nome da turma');
-    }
+  async function handleNewGroup() {
+    try {
+      // if (group.trim().length === 0) {
+      //   return alert('Informe o nome da turma');
+      // }
 
-    router.push({
-      pathname: '/players',
-      params: { group }
-    });
+      await groupCreate(group);
+
+      router.push({
+        pathname: "/players",
+        params: { group },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -29,24 +36,19 @@ export default function NewGroup() {
       <Content>
         <Icon />
 
-        <Highlight 
+        <Highlight
           title="Nova Turma"
           subtitle="Crie a turma para adicionar as pessoas"
         />
 
-        <Input 
-          placeholder="Nome da turma"
-          onChangeText={setGroup}
-        />
+        <Input placeholder="Nome da turma" onChangeText={setGroup} />
 
-        
-        <Button 
+        <Button
           title="Criar"
           style={{ marginTop: 20 }}
           onPress={handleNewGroup}
         />
-
       </Content>
     </Container>
   );
-} 
+}
