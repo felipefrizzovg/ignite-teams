@@ -1,5 +1,5 @@
-import { Alert, FlatList } from "react-native";
-import { useState, useEffect } from "react";
+import { Alert, FlatList, TextInput } from "react-native";
+import { useState, useEffect, useRef } from "react";
 import { useLocalSearchParams } from "expo-router";
 
 import { AppError } from "@/src/utils/AppError";
@@ -23,8 +23,11 @@ export default function Players() {
   const [team, setTeam] = useState('Time A');
   const [players, setPlayers] = useState<PlayerStorageDTO[]>([]);
   const [newPlayerName, setNewPlayerName] = useState('');
+
   const params = useLocalSearchParams()
   const group = params.group as string;
+
+  const newPlayerNameInputRef = useRef<TextInput>(null);
 
   async function handleAddPlayer() {
     if (newPlayerName.trim().length === 0) {
@@ -38,6 +41,10 @@ export default function Players() {
 
     try {
       await playerAddByGroup(newPlayer, group);
+      newPlayerNameInputRef.current?.blur();
+
+      setNewPlayerName('');
+
       fetchPlayersByTeam();
     } catch (error) {
       if (error instanceof AppError) {
@@ -74,9 +81,13 @@ export default function Players() {
 
       <Form>
         <Input 
+          inputRef={newPlayerNameInputRef}
           placeholder="Nome da pessoa"
           onChangeText={setNewPlayerName}
+          value={newPlayerName}
           autoCorrect={false}
+          onSubmitEditing={handleAddPlayer}
+          returnKeyType="done"
         />
         <ButtonIcon 
           icon="add"
