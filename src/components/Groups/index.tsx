@@ -11,16 +11,22 @@ import Button from "../Button";
 
 import { Link, useFocusEffect, useRouter } from "expo-router";
 import groupsGetAll from "@/src/storage/group/groupsGetAll";
+import Loading from "../Loading";
 
 export default function Groups() {
+  const [isLoading, setIsLoading] = useState(true);
   const [groups, setGroups] = useState<string[]>([]);
 
   const router = useRouter();
 
   async function fetchGroups() {
     try {
+      setIsLoading(true);
+
       const data = await groupsGetAll();
+
       setGroups(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -45,17 +51,21 @@ export default function Groups() {
 
       <Highlight title="Turmas" subtitle="Jogue com a sua turma" />
 
-      <FlatList
-        data={groups}
-        keyExtractor={(item) => item}
-        renderItem={({ item }) => (
-          <GroupCard title={item} onPress={() => handleOpenGroup(item)} />
-        )}
-        contentContainerStyle={groups.length === 0 && { flex: 1 }}
-        ListEmptyComponent={() => (
-          <ListEmpty message="Que tal cadastrar a primeira turma?" />
-        )}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <FlatList
+          data={groups}
+          keyExtractor={(item) => item}
+          renderItem={({ item }) => (
+            <GroupCard title={item} onPress={() => handleOpenGroup(item)} />
+          )}
+          contentContainerStyle={groups.length === 0 && { flex: 1 }}
+          ListEmptyComponent={() => (
+            <ListEmpty message="Que tal cadastrar a primeira turma?" />
+          )}
+        />
+      )}
 
       <Link href="/newGroup" asChild>
         <Button title="Criar nova turma" />
